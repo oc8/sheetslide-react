@@ -29,6 +29,7 @@ function App() {
         fit={true}
         color="white"
         size="85vh"
+				side="top"
       >
         <div>Your sheet content</div>
       </SheetSlide>
@@ -50,6 +51,7 @@ SheetSlide accepts the following props:
 - `fit` (boolean, optional) : If true, the sheet adjusts to the size of its content.
 - `color` (string, optional) : The background color of the sheet.
 - `size` (string, optional) : The size of the sheet when open (e.g., '85vh').
+- `side` (string, optional) : The side of the screen where the sheet will appear. Accepts "top", or "bottom" (default is "bottom").
 
 ## License
 This project is licensed under the MIT License.

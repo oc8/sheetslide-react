@@ -1,5 +1,4 @@
 import React, { useState, useRef, useEffect } from 'react'
-// import { styled } from '@mui/system';
 import { useSwipeable } from 'react-swipeable';
 
 // const DrawerStyle = styled('div')(({theme}) => ({
@@ -11,15 +10,6 @@ import { useSwipeable } from 'react-swipeable';
 // 		height: '1000px',
 // 	},
 // }));
-// const Shadow = styled('div')(({theme}) => ({
-// 	position: 'fixed',
-// 	top: '0',
-// 	left: '0',
-// 	width: '100vw',
-// 	height: '100vh',
-// 	backgroundColor: 'rgba(123, 123, 123, 0.15)',
-// 	zIndex: 0
-// }));
 
 type Props = {
 	children: React.ReactNode;
@@ -30,11 +20,24 @@ type Props = {
 	fit?: boolean;
 	color?: string;
 	size?: string;
+	side?: string;
+	threshold?: number;
+	shadow?: boolean;
 };
 
 let lastPos = 0;
 let move = false;
-function SheetSlide(props: Props) {
+function SheetSlide(initProps: Props) {
+	const props = {
+		fit: false,
+		color: 'initial',
+		side: 'bottom',
+		threshold: 50,
+		minSize: '0',
+		size: '85vh',
+		shadow: true,
+		...initProps
+	};
 	const [open, setOpen] = useState(false);
 	const [translateY, setTranslateY] = useState(0);
   const sheetRef = useRef<HTMLDivElement>(null);
@@ -55,7 +58,7 @@ function SheetSlide(props: Props) {
 	function calcDist() {
 		let dist = '100vh';
 		if (open)
-			dist = `calc(100vh - ${props.size ? props.size : '85vh'} + ${translateY}px)`;
+			dist = `calc(100vh - ${props.size} + ${translateY}px)`;
 		else if (props.minSize)
 			dist = `calc(100vh - ${props.minSize} + ${translateY}px)`
 		return dist;
@@ -73,7 +76,7 @@ function SheetSlide(props: Props) {
 			else {
 				lastPos = translateY;
 			}
-      if (translateY > 50)
+      if (translateY > props.threshold)
 				onClose();
     },
     onSwipedUp: () => {
@@ -93,7 +96,7 @@ function SheetSlide(props: Props) {
 				setTranslateY(0);
 				lastPos = 0;
 			}
-      if (translateY < -50 && !open) {
+      if (translateY < -props.threshold && !open) {
 				setOpen(true);
 				props.onOpenChange(true);
 			}
@@ -109,12 +112,22 @@ function SheetSlide(props: Props) {
 
   return (
 		<>
-		<div onClick={onClose} style={{display: open ? 'block' : 'none'}}/>
+		{props.shadow && <div onClick={onClose} style={{
+			display: open ? 'block' : 'none',
+			position: 'fixed',
+			top: '0',
+			left: '0',
+			width: '100vw',
+			height: '100vh',
+			backgroundColor: 'rgba(123, 123, 123, 0.15)',
+			zIndex: 0
+		}}/>}
     <div
 			style={{
 				position: 'fixed',
-				top: calcDist(),
-				transition: move ? '' : 'top 0.3s ease'
+				top: props.side === 'bottom' ? calcDist() : '',
+				bottom: props.side === 'top' ? calcDist() : '',
+				transition: move ? '' : 'all 0.3s ease'
 			}}
       {...handlers}
     >
