@@ -3,7 +3,7 @@
 SheetSlide is a Node package for React that allows you to add a swipeable, sliding sheet to your web application. With this component, you can easily add a sheet that can be moved vertically by swiping up or down.
 
 ## Demo
-![Demo](preview.gif)
+<img src="preview.gif" alt="Demo" width="300" height="auto" />
 
 
 ## Installation
@@ -30,10 +30,9 @@ function App() {
         open={open}
         onOpenChange={(value) => setOpen(value)}
         minSize="20vh"
-        fit={true}
         color="white"
         size="85vh"
-				side="top"
+	side="top"
       >
         <div>Your sheet content</div>
       </SheetSlide>
