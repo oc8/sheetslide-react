@@ -143,6 +143,7 @@ function SheetSlide(initProps: Props) {
 				ref={sheetRef}
 				style={{
 					width: props.fit ? 'auto' : '100vw',
+					backgroundColor: 'transparent',
 					borderRadius: props.rounded ? props.side === 'bottom' ? '10px 10px 0 0' : '0 0 10px 10px' : '',
 					boxShadow: props.shadow ? props.side === 'bottom' ? '0 -5px 10px rgba(0, 0, 0, 0.15)' : '0 5px 10px rgba(0, 0, 0, 0.15)' : '',
 					...props.style
