@@ -6,7 +6,7 @@ SheetSlide is a Node package for React that allows you to add a swipeable, slidi
 Install the package using npm:
 
 ```bash
-npm install react-slide-control-panel
+npm install sheetslide-react
 ```
 
 ## Usage
