@@ -1,7 +1,7 @@
 {
   "name": "sheetslide-react",
 	"description": "A customizable React component for displaying a sliding panel. Ideal for grouping frequently used actions or settings in a user interface.",
-  "version": "1.0.0",
+  "version": "1.0.2",
   "author": "oc8",
   "license": "MIT",
   "main": "src/components/SheetSlide.tsx",
