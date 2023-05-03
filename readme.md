@@ -52,6 +52,11 @@ SheetSlide accepts the following props:
 - `color` (string, optional) : The background color of the sheet.
 - `size` (string, optional) : The size of the sheet when open (e.g., '85vh').
 - `side` (string, optional) : The side of the screen where the sheet will appear. Accepts "top", or "bottom" (default is "bottom").
+- `threshold` (number, optional) : The minimum swipe distance required to trigger actions (e.g., 50).
+- `shadow` (boolean, optional) : If true, a shadow effect will be applied to the sheet.
+- `rounded` (boolean, optional) : If true, the sheet will have rounded corners.
+- `backgroundShadow` (boolean, optional) : If true, a background shadow will be displayed when the sheet is open.
+- `style` (React.CSSProperties, optional) : Custom CSS styles to be applied to the sheet.
 
 ## License
 This project is licensed under the MIT License.

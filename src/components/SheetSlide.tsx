@@ -23,6 +23,9 @@ type Props = {
 	side?: string;
 	threshold?: number;
 	shadow?: boolean;
+	rounded?: boolean;
+	backgroundShadow?: boolean;
+	style?: React.CSSProperties;
 };
 
 let lastPos = 0;
@@ -30,12 +33,14 @@ let move = false;
 function SheetSlide(initProps: Props) {
 	const props = {
 		fit: false,
-		color: 'initial',
+		color: 'transparent',
 		side: 'bottom',
 		threshold: 50,
-		minSize: '0',
+		minSize: '0px',
 		size: '85vh',
-		shadow: true,
+		backgroundShadow: true,
+		shadow: false,
+		rounded: false,
 		...initProps
 	};
 	const [open, setOpen] = useState(false);
@@ -56,11 +61,11 @@ function SheetSlide(initProps: Props) {
 	}
 
 	function calcDist() {
-		let dist = '100vh';
+		let dist = `calc(100vh - ${props.minSize} + ${translateY}px)`;
 		if (open)
 			dist = `calc(100vh - ${props.size} + ${translateY}px)`;
-		else if (props.minSize)
-			dist = `calc(100vh - ${props.minSize} + ${translateY}px)`
+		else if (props.minSize === '0px')
+			dist = `calc(100vh - ${props.minSize} - 10px + ${translateY}px)`
 		return dist;
 	}
 
@@ -112,7 +117,7 @@ function SheetSlide(initProps: Props) {
 
   return (
 		<>
-		{props.shadow && <div onClick={onClose} style={{
+		{props.backgroundShadow && <div onClick={onClose} style={{
 			display: open ? 'block' : 'none',
 			position: 'fixed',
 			top: '0',
@@ -120,24 +125,42 @@ function SheetSlide(initProps: Props) {
 			width: '100vw',
 			height: '100vh',
 			backgroundColor: 'rgba(123, 123, 123, 0.15)',
-			zIndex: 0
-		}}/>}
+			zIndex: 0,
+ 		}}/>}
     <div
+			className='sheet-slide'
 			style={{
 				position: 'fixed',
 				top: props.side === 'bottom' ? calcDist() : '',
 				bottom: props.side === 'top' ? calcDist() : '',
-				transition: move ? '' : 'all 0.3s ease'
+				transition: move ? '' : 'all 0.3s ease',
+				paddingTop: props.side === 'bottom' && props.minSize === '0px' ? '10px' : '',
+				paddingBottom: props.side === 'top' && props.minSize === '0px' ? '10px' : '',
 			}}
       {...handlers}
     >
 			<div
 				ref={sheetRef}
-				style={props.fit ? {} : {width: '100vw'}}
+				style={{
+					width: props.fit ? 'auto' : '100vw',
+					borderRadius: props.rounded ? props.side === 'bottom' ? '10px 10px 0 0' : '0 0 10px 10px' : '',
+					backgroundColor: props.color,
+					boxShadow: props.shadow ? props.side === 'bottom' ? '0 -5px 10px rgba(0, 0, 0, 0.15)' : '0 5px 10px rgba(0, 0, 0, 0.15)' : '',
+					...props.style
+				}}
 			>
 				{props.children}
 			</div>
     </div>
+		<style>
+			{`.sheet-slide::after {
+				content: "";
+				background-color: ${props.color};
+				position: absolute;
+				width: 100%;
+				height: 1000px;
+			}`}
+		</style>
 		</>
   );
 };
