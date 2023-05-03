@@ -33,7 +33,7 @@ let move = false;
 function SheetSlide(initProps: Props) {
 	const props = {
 		fit: false,
-		color: 'transparent',
+		color: 'white',
 		side: 'bottom',
 		threshold: 50,
 		minSize: '0px',
