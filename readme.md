@@ -18,7 +18,7 @@ Here's an example of using SheetSlide in your React application:
 
 ```tsx
 import React, { useState } from 'react';
-import SheetSlide from 'sheet-slide-swipeable';
+import SheetSlide from 'sheetslide-react';
 
 function App() {
   const [open, setOpen] = useState(false);
